@@ -1,0 +1,39 @@
+[
+  {
+    "flight_number": "LA2376",
+    "departure_date": "2026-08-06",
+    "departure_time": "15:40",
+    "origin": "SCL",
+    "destination": "LIM",
+    "available_seats": 8,
+    "connections": 0
+  },
+  {
+    "flight_number": "LA2696",
+    "departure_date": "2026-08-06",
+    "departure_time": "19:05",
+    "origin": "SCL",
+    "destination": "LIM",
+    "available_seats": 3,
+    "connections": 0
+  },
+  {
+    "flight_number": "LA2410",
+    "departure_date": "2026-08-07",
+    "departure_time": "07:10",
+    "origin": "SCL",
+    "destination": "LIM",
+    "available_seats": 12,
+    "connections": 0
+  },
+  {
+    "flight_number": "LA532",
+    "departure_date": "2026-08-07",
+    "departure_time": "23:15",
+    "origin": "SCL",
+    "destination": "MIA",
+    "available_seats": 4,
+    "connections": 1
+  }
+]
+

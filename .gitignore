@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+reports/
+dist/
+build/
+*.egg-info/
+gha-creds-*.json
+.terraform/
+*.tfstate
+*.tfstate.*
+

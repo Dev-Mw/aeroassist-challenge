@@ -1,0 +1,39 @@
+[
+  {
+    "found": true,
+    "booking_code": "Q7M2PX",
+    "flight_number": "LA401",
+    "departure_date": "2026-08-06",
+    "origin": "SCL",
+    "destination": "LIM",
+    "passengers": 1,
+    "fare_family": "FLEX",
+    "loyalty_tier": "GOLD",
+    "special_service_requests": []
+  },
+  {
+    "found": true,
+    "booking_code": "H8K9LM",
+    "flight_number": "LA602",
+    "departure_date": "2026-08-06",
+    "origin": "SCL",
+    "destination": "LAX",
+    "passengers": 2,
+    "fare_family": "LIGHT",
+    "loyalty_tier": "NONE",
+    "special_service_requests": []
+  },
+  {
+    "found": true,
+    "booking_code": "Z3TRIP",
+    "flight_number": "LA500",
+    "departure_date": "2026-08-07",
+    "origin": "SCL",
+    "destination": "MIA",
+    "passengers": 1,
+    "fare_family": "FULL",
+    "loyalty_tier": "PLATINUM",
+    "special_service_requests": ["WCHR"]
+  }
+]
+

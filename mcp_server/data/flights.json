@@ -1,0 +1,55 @@
+[
+  {
+    "found": true,
+    "flight_number": "LA401",
+    "departure_date": "2026-08-06",
+    "origin": "SCL",
+    "destination": "LIM",
+    "scheduled_departure": "2026-08-06T10:20:00-04:00",
+    "status": "CANCELLED",
+    "delay_minutes": 0,
+    "disruption_cause": "WEATHER",
+    "airline_controlled": false,
+    "last_updated": "2026-08-06T08:05:00-04:00"
+  },
+  {
+    "found": true,
+    "flight_number": "LA602",
+    "departure_date": "2026-08-06",
+    "origin": "SCL",
+    "destination": "LAX",
+    "scheduled_departure": "2026-08-06T22:55:00-04:00",
+    "status": "DELAYED",
+    "delay_minutes": 125,
+    "disruption_cause": "TECHNICAL",
+    "airline_controlled": true,
+    "last_updated": "2026-08-06T22:10:00-04:00"
+  },
+  {
+    "found": true,
+    "flight_number": "LA2697",
+    "departure_date": "2026-08-06",
+    "origin": "LIM",
+    "destination": "SCL",
+    "scheduled_departure": "2026-08-06T17:15:00-05:00",
+    "status": "ON_TIME",
+    "delay_minutes": 0,
+    "disruption_cause": null,
+    "airline_controlled": false,
+    "last_updated": "2026-08-06T15:00:00-05:00"
+  },
+  {
+    "found": true,
+    "flight_number": "LA500",
+    "departure_date": "2026-08-07",
+    "origin": "SCL",
+    "destination": "MIA",
+    "scheduled_departure": "2026-08-07T21:30:00-04:00",
+    "status": "CANCELLED",
+    "delay_minutes": 0,
+    "disruption_cause": "CREW",
+    "airline_controlled": true,
+    "last_updated": "2026-08-07T17:40:00-04:00"
+  }
+]
+

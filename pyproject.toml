@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aeroassist-challenge"
+version = "1.0.0"
+description = "Progressive GenAI MLE challenge"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "fastapi>=0.115,<1.0",
+  "google-genai>=1.50,<2.0",
+  "mcp>=1.18,<2.0",
+  "numpy>=2.0,<3.0",
+  "pydantic>=2.9,<3.0",
+  "scikit-learn>=1.5,<2.0",
+  "uvicorn[standard]>=0.30,<1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.27,<1.0",
+  "pytest>=8.3,<10.0",
+  "pytest-asyncio>=0.24,<1.0",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*", "mcp_server*"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+

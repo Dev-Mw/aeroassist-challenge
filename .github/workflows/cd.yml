@@ -1,0 +1,18 @@
+name: cd
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Implement deployment
+        run: |
+          echo "Replace this step with an authenticated, reproducible deployment"
+          exit 1
+
