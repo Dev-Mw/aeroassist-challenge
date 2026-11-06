@@ -51,7 +51,7 @@ jobs:
                       assert response.status == 200
                       assert json.load(response)["status"] == "ok"
                   break
-              except (urllib.error.URLError, TimeoutError):
+              except (urllib.error.URLError, ConnectionError, TimeoutError):
                   if attempt == 29:
                       raise
                   time.sleep(1)
