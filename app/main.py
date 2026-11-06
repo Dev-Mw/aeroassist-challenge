@@ -14,6 +14,7 @@ from fastapi import FastAPI, HTTPException, Request, Response
 
 from app import __version__
 from app.agent import AeroAssistAgent
+from app.llm import FakeLLM
 from app.observability import Metrics, configure_logging, logger
 from app.operations import UnsafeOperation
 from app.schemas import (
@@ -118,17 +119,23 @@ def create_app(agent: AeroAssistAgent | None = None) -> FastAPI:
 
     @application.get("/v1/capabilities", response_model=CapabilitiesResponse)
     async def capabilities() -> CapabilitiesResponse:
+        agent = application.state.agent
+        fake_backend = isinstance(agent.provider, FakeLLM)
         return CapabilitiesResponse(
             challenge_version=__version__,
             levels=CapabilityLevels(
+                # Cloud Run deployment and CD have not been validated.
                 foundation=False,
-                core=False,
-                tools_mcp=False,
-                rag=False,
+                # The fake provider is only used for offline infrastructure tests.
+                core=not fake_backend and agent.generate_grounded,
+                tools_mcp=True,
+                rag=True,
+                # Production deployment is not yet verified on GCP.
                 production=False,
             ),
-            llm_backend=("fake" if application.state.agent.provider.model_name == "fake-local-v1"
-                         else os.getenv("LLM_BACKEND", "custom")),
+            llm_backend=(
+                "fake" if fake_backend else os.getenv("LLM_BACKEND", "custom")
+            ),
             tool_transport="mcp",
         )
 

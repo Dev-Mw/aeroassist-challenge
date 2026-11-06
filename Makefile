@@ -27,6 +27,5 @@ evaluate-public: ## Run the public black-box cases against BASE_URL
 docker-build: ## Build the local OCI image
 	docker build -t aeroassist:local .
 
-
 evaluate-rag: ## Evaluate local RAG retrieval; BASE_URL for optional live HTTP evaluation
 	$(PYTHON) -m scripts.evaluate_rag
