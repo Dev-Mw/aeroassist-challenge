@@ -63,3 +63,7 @@ gcloud run services delete aeroassist --region us-central1
 ```
 
 Never use a broad deletion command or delete a shared project.
+
+## Iteration 8 deployment workflow
+
+The original commands above remain a bootstrap example, not the current release process. The reviewed CI/CD implementation and its required repository/GCP configuration are documented in [`CONTAINER_CICD.md`](../../docs/CONTAINER_CICD.md). The automated workflow defaults to **private Cloud Run** and 1 GiB RAM; it deploys the digest built from the exact CI-verified commit. Do not treat this path as verified until a GitHub Actions deployment actually succeeds and an authorized caller can exercise the HTTPS API.

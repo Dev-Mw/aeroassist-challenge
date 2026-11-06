@@ -9,6 +9,7 @@ description = "Progressive GenAI MLE challenge"
 requires-python = ">=3.11,<3.14"
 dependencies = [
   "fastapi>=0.115,<1.0",
+  "httpx2>=2.13,<3.0",
   "google-genai>=1.50,<2.0",
   "mcp>=1.18,<2.0",
   "numpy>=2.0,<3.0",
@@ -19,7 +20,6 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  "httpx>=0.27,<1.0",
   "pytest>=8.3,<10.0",
   "pytest-asyncio>=0.24,<1.0",
   "pytest-cov>=6,<8",
@@ -36,6 +36,8 @@ asyncio_mode = "auto"
 
 [tool.ruff]
 line-length = 100
+# The MCP fixture is supplied by the challenge and must remain unchanged.
+extend-exclude = ["mcp_server", "tests"]
 target-version = "py311"
 
 [tool.ruff.lint]

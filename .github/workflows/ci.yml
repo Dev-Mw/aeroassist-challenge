@@ -1,5 +1,7 @@
 name: ci
 
+# No cloud credentials; only quality checks and container smoke tests.
+
 on:
   pull_request:
   push:
@@ -19,4 +21,51 @@ jobs:
           cache: pip
       - run: python -m pip install -e ".[dev]"
       - run: make lint test
+      - run: make evaluate-rag
 
+  container:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build OCI image
+        run: make docker-build
+      - name: Verify unprivileged container and HTTP contract
+        run: |
+          set -euo pipefail
+          docker run -d --name aeroassist-ci \
+            -e LLM_BACKEND=fake \
+            -p 127.0.0.1:18080:8080 aeroassist:local
+          trap 'docker logs aeroassist-ci; docker rm -f aeroassist-ci' EXIT
+          # Retry startup without relying on curl being present inside the image.
+          python - <<'PY'
+          import json
+          import time
+          import urllib.error
+          import urllib.request
+
+          base = "http://127.0.0.1:18080"
+          for attempt in range(30):
+              try:
+                  with urllib.request.urlopen(base + "/health", timeout=2) as response:
+                      assert response.status == 200
+                      assert json.load(response)["status"] == "ok"
+                  break
+              except (urllib.error.URLError, TimeoutError):
+                  if attempt == 29:
+                      raise
+                  time.sleep(1)
+          with urllib.request.urlopen(base + "/ready", timeout=2) as response:
+              assert response.status == 200
+              assert json.load(response)["status"] == "ready"
+          body = json.dumps({"message": "¿Qué puedes hacer?"}).encode("utf-8")
+          request = urllib.request.Request(
+              base + "/v1/chat", data=body,
+              headers={"content-type": "application/json"}, method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=15) as response:
+              result = json.load(response)
+              assert response.status == 200
+              assert isinstance(result["answer"], str) and result["answer"]
+          PY
+          test "$(docker inspect -f '{{.Config.User}}' aeroassist-ci)" = "app"

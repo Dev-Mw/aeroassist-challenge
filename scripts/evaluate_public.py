@@ -8,17 +8,21 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
+from urllib.parse import urlsplit
 
 
 def post_json(url: str, payload: dict) -> tuple[int, dict]:
-    request = urllib.request.Request(
+    parsed = urlsplit(url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError("The evaluator requires an HTTP(S) API URL")
+    request = urllib.request.Request(  # noqa: S310 -- validated HTTP(S) URL
         url,
         data=json.dumps(payload).encode("utf-8"),
         headers={"content-type": "application/json"},
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=40) as response:
+        with urllib.request.urlopen(request, timeout=40) as response:  # noqa: S310
             return response.status, json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         raw = exc.read().decode("utf-8")
@@ -63,7 +67,11 @@ def main() -> int:
         default=Path("evaluation/public_golden.jsonl"),
     )
     args = parser.parse_args()
-    cases = [json.loads(line) for line in args.cases.read_text(encoding="utf-8").splitlines() if line]
+    cases = [
+        json.loads(line)
+        for line in args.cases.read_text(encoding="utf-8").splitlines()
+        if line
+    ]
     passed = 0
     for case in cases:
         errors = check_case(args.base_url, case)
