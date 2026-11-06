@@ -1,6 +1,6 @@
 .PHONY: help install test lint run run-local evaluate-public evaluate-rag docker-build
 
-PYTHON ?= py
+PYTHON ?= python
 BASE_URL ?= http://127.0.0.1:8080
 
 help:
