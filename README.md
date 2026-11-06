@@ -151,3 +151,76 @@ Expect to:
 - interpret one evaluation or operational signal.
 
 This follow-up validates understanding, including code produced with AI assistance.
+
+
+## Running and Testing
+
+### Requirements
+- Python 3.11+
+- Make
+- Docker (optional)
+- Ollama with `llama3.2:latest` for local LLM inference
+
+### 1. Install dependencies
+
+```bash
+make install
+```
+
+### 2. Run locally with Ollama
+
+Make sure Ollama is running and the model is available:
+
+```bash
+ollama pull llama3.2:latest
+make run-local
+```
+
+API: `http://localhost:8080`
+
+### 3. Run automated checks
+
+In another terminal:
+
+```bash
+make test
+make lint
+make evaluate-public
+make evaluate-rag
+```
+
+`evaluate-public` requires the API to be running.
+
+### 4. Run with Docker
+
+```bash
+make docker-build
+
+docker run --rm \
+  -e LLM_BACKEND=fake \
+  -p 127.0.0.1:18080:8080 \
+  aeroassist:local
+```
+
+Check the endpoints:
+
+```bash
+curl http://localhost:18080/health
+curl http://localhost:18080/ready
+```
+
+The Docker command uses the fake provider for an infrastructure smoke test, not real LLM inference.
+
+### 5. CI/CD
+
+GitHub Actions runs tests, lint, RAG evaluation and a Docker smoke test on push and pull request.
+
+Cloud Run deployment is configured separately and remains disabled pending GCP access.
+
+### 6. API endpoints
+
+- `GET /health`
+- `GET /ready`
+- `GET /v1/capabilities`
+- `POST /v1/chat`
+- `GET /metrics`
